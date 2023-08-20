@@ -29,7 +29,8 @@ public class P6SpySqlFormatterConfig implements MessageFormattingStrategy {
         sql = formatSql(category, sql);
         String stackTrace = stackTrace();
         String querySpeedCheck = getQuerySpeedCheck(elapsed);
-        return String.format("[%s] | %d ms, %s | %s | %s", category, elapsed, querySpeedCheck, stackTrace, formatSql(category, sql));
+        String query = highlight(formatSql(category, sql));
+        return String.format("[%s] | %d ms, %s | %s | %s", category, elapsed, querySpeedCheck, stackTrace, query);
     }
 
     private static String getQuerySpeedCheck(long elapsed) {
@@ -63,6 +64,10 @@ public class P6SpySqlFormatterConfig implements MessageFormattingStrategy {
         }
 
         return sql;
+    }
+
+    private String highlight(String sql) {
+        return FormatStyle.HIGHLIGHT.getFormatter().format(sql);
     }
 
 }

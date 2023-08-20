@@ -22,10 +22,6 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Builder
     public Comment(String content, User user) {
         this.content = content;

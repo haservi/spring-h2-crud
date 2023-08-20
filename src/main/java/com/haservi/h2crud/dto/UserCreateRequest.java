@@ -30,7 +30,7 @@ public class UserCreateRequest {
 
     @Override
     public String toString() {
-        return "UserCreateRequestDto{" +
+        return "UserCreateRequest{" +
                 "userId='" + userId + '\'' +
                 ", name='" + name + '\'' +
                 ", age='" + age + '\'' +

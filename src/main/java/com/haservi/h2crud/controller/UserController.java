@@ -24,7 +24,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<String> save(@RequestBody UserCreateRequest request) {
         log.info("save : {}", request.toString());
-        User savedUser = userService.save(request.toEntity());
+        User savedUser = userService.saveUser(request.toEntity());
         if (savedUser != null) {
             return ResponseEntity.ok().body("User saved successfully");
         } else {
@@ -41,14 +41,22 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody UserUpdateRequest request) {
         try {
-            User user = userService.findById(id);
-            user.update(request.getName(), request.getAge());
-            userService.save(user);
+            userService.updateUser(id, request);
             return ResponseEntity.ok().body("User Update");
-
         } catch (Exception e) {
             log.error("update error: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Update Failed");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok().body("User Delete");
+        } catch (Exception e) {
+            log.error("user delete error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Delete Failed");
         }
     }
 

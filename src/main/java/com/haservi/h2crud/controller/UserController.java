@@ -2,6 +2,7 @@ package com.haservi.h2crud.controller;
 
 import com.haservi.h2crud.dto.UserCreateRequest;
 import com.haservi.h2crud.dto.UserSearchResponse;
+import com.haservi.h2crud.dto.UserUpdateRequest;
 import com.haservi.h2crud.entity.User;
 import com.haservi.h2crud.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,20 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserSearchResponse>> search() {
         return ResponseEntity.ok().body(userService.findAll());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody UserUpdateRequest request) {
+        try {
+            User user = userService.findById(id);
+            user.update(request.getName(), request.getAge());
+            userService.save(user);
+            return ResponseEntity.ok().body("User Update");
+
+        } catch (Exception e) {
+            log.error("update error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Update Failed");
+        }
     }
 
 }

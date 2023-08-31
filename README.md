@@ -13,3 +13,9 @@ http://localhost:8080/h2-console
 ``` bash
 http://localhost:8080/swagger-ui/index.html
 ```
+
+위의 swagger-ui 접속하면 아래와 같이 api를 확인할 수 있습니다.
+
+![img.png](images/image01.png)
+
+![img.png](images/image02.png)
